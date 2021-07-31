@@ -9,23 +9,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Cards of user: ${user.email}</title>
+    <title>Adding Card for user: ${user.email}</title>
 </head>
 <body>
+<a href="/logout">Wyloguj</a>
 <table>
     <thead>
     <th>Name</th>
     <th>Amount of cocktails</th>
+    <th>Action</th>
     </thead>
     <tbody>
+    ${user}
     <c:forEach var="card" items="${cards}">
         <tr>
             <td>${card.name}</td>
-            <td>${card.cocktails.size}</td>
+<%--            <td>${card.cocktails.size}</td>--%>
+            <td>
+                <a href="<c:out value="/app/card/form/${card.id}"/>">Edytuj</a>
+                <a href="<c:out value="/app/card/del/${card.id}"/>">Usuń</a>
+            </td>
         </tr>
 
     </c:forEach>
+
     </tbody>
+</table>
+<table>
+    <tr><a href="<c:out value="/app/card/form"/>">Dodaj kartę</a> </tr>
 </table>
 
 </body>

@@ -39,7 +39,7 @@ public class UserController {
             User sessionUser = userRepository.findByEmail(user.getEmail());
             HttpSession session = request.getSession();
             session.setAttribute("user", sessionUser);
-            return "redirect:/";
+            return "redirect:/app/card/all";
         } else {
             return "redirect:/login";
         }
@@ -64,6 +64,13 @@ public class UserController {
             return "/form";
         }
         userRepository.save(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        session.removeAttribute("user");
         return "redirect:/";
     }
 }
