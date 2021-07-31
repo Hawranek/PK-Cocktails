@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/app/card")
@@ -67,4 +68,11 @@ public class CardController {
         return "redirect:/app/card/all";
     }
 
+    @RequestMapping("/{id}/cocktails")
+    public String cocktailList(@PathVariable Long id, Model model){
+        Card byId = cardRepository.findById(id).orElse(null);
+        model.addAttribute("card",byId);
+        model.addAttribute("cocktails",byId.getCocktails());
+        return "/drinks/cardcocktails";
+    }
 }
