@@ -38,7 +38,7 @@ public class CocktailController {
         String resource = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
         CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
         model.addAttribute("cocktails", cocktailList);
-        return "drinks/cardcocktails";
+        return "drinks/list";
     }
 
     @GetMapping("/list/letter")
@@ -47,13 +47,13 @@ public class CocktailController {
         String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/search.php?f=%s", litera);
         CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
         model.addAttribute("cocktails", cocktailList);
-        return "drinks/cardcocktails";
+        return "drinks/list";
     }
 
     @GetMapping("/show")
     public String showDrink(@RequestParam("drinkid") Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s", id);
+        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%d", id);
         CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
         model.addAttribute("cocktail", cocktailList);
         return "drinks/show";

@@ -3,6 +3,7 @@ package pl.coderslab.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.coderslab.jsonclasses.Drink;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,4 +26,7 @@ public class Cocktail {
     @ManyToMany
     private List<Ingredient> ingredients;
     private String imageSource;
+    private String ingredientList;
+
+
 }

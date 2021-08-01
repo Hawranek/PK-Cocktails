@@ -3,13 +3,16 @@ package pl.coderslab.jsonclasses;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.coderslab.entity.Cocktail;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class Drink{
+public class Drink {
     private Long idDrink;
     private String strDrink;
     private String strDrinkAlternate;
@@ -58,5 +61,54 @@ public class Drink{
     private String strImageSource;
     private String strImageAttribution;
     private String strCreativeCommonsConfirmed;
+
+    public List<String> getIngredientList() {
+        List<String> tmp = Arrays.asList(
+                (strMeasure1 != null || strIngredient1 != null ? String.format("%s of %s", strMeasure1, strIngredient1) : null),
+                (strMeasure2 != null || strIngredient2 != null ? String.format("%s of %s", strMeasure2, strIngredient2) : null),
+                (strMeasure3 != null || strIngredient3 != null ? String.format("%s of %s", strMeasure3, strIngredient3) : null),
+                (strMeasure4 != null || strIngredient4 != null ? String.format("%s of %s", strMeasure4, strIngredient4) : null),
+                (strMeasure5 != null || strIngredient5 != null ? String.format("%s of %s", strMeasure5, strIngredient5) : null),
+                (strMeasure6 != null || strIngredient6 != null ? String.format("%s of %s", strMeasure6, strIngredient6) : null),
+                (strMeasure7 != null || strIngredient7 != null ? String.format("%s of %s", strMeasure7, strIngredient7) : null),
+                (strMeasure8 != null || strIngredient8 != null ? String.format("%s of %s", strMeasure8, strIngredient8) : null),
+                (strMeasure9 != null || strIngredient9 != null ? String.format("%s of %s", strMeasure9, strIngredient9) : null),
+                (strMeasure10 != null || strIngredient10 != null ? String.format("%s of %s", strMeasure10, strIngredient10) : null),
+                (strMeasure11 != null || strIngredient11 != null ? String.format("%s of %s", strMeasure11, strIngredient11) : null),
+                (strMeasure12 != null || strIngredient12 != null ? String.format("%s of %s", strMeasure12, strIngredient12) : null),
+                (strMeasure13 != null || strIngredient13 != null ? String.format("%s of %s", strMeasure13, strIngredient13) : null),
+                (strMeasure14 != null || strIngredient14 != null ? String.format("%s of %s", strMeasure14, strIngredient14) : null),
+                (strMeasure15 != null || strIngredient15 != null ? String.format("%s of %s", strMeasure15, strIngredient15) : null)
+        );
+
+        List<String> result = new ArrayList<>();
+        for (String s : tmp) {
+            if (s != null) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+
+    private Cocktail parseToCocktail() {
+        Cocktail cocktail = new Cocktail();
+        cocktail.setId(idDrink);
+        cocktail.setName(strDrink);
+        cocktail.setCategory(strCategory);
+        cocktail.setAlcoholic(strAlcoholic.equals("Alcoholic"));
+        cocktail.setGlass(strGlass);
+        cocktail.setInstructions(strInstructions);
+        cocktail.setDrinkThumb(strDrinkThumb);
+        for (String s : getIngredientList()) {
+            cocktail.setIngredientList(cocktail.getIngredientList() + "\n" + s);
+        }
+        cocktail.setImageSource(strImageSource);
+
+        return cocktail;
+    }
+
+
+
 //    private LocalDateTime dateModified;
 }

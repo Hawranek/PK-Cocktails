@@ -35,7 +35,6 @@
 </table>
 <table>
     <thead>
-    <th>Cocktail name</th>
     <th>Category</th>
     <th>Alcoholic</th>
     <th>Glass type</th>

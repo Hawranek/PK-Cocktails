@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @ToString
 public class CocktailList implements Serializable {
-    private Long id;
     private List<Drink> drinks;
 
 }
