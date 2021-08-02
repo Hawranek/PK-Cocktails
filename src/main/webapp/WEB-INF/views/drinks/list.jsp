@@ -21,23 +21,29 @@
 <body>
 <%@include file="search/byfirstletter.jsp" %>
 <table>
+    <form action="/app/drink/list/search" method="get">
+<tr>
     <td>
-        <%@include file="search/byname.jsp" %>
-    </td>
+            <%@include file="search/byname.jsp" %>
+        </td>
+</tr>
 
-    <td>
-        <%@include file="search/byingredient.jsp" %>
-    </td>
-    <td>
-        <%@include file="search/byalcoholic.jsp" %>
-    </td>
-    <td>
-        <%@include file="search/bycategory.jsp" %>
-    </td>
-    <td>
-        <%@include file="search/byglass.jsp" %>
-    </td>
-
+    </form>
+    <form action="/app/drink/list/filter" method="get">
+        <td>
+            <%@include file="search/byingredient.jsp" %>
+        </td>
+        <td>
+            <%@include file="search/byalcoholic.jsp" %>
+        </td>
+        <td>
+            <%@include file="search/bycategory.jsp" %>
+        </td>
+        <td>
+            <%@include file="search/byglass.jsp" %>
+        </td>
+        <input type="submit">
+    </form>
 </table>
 <%@include file="printlist.jsp" %>
 

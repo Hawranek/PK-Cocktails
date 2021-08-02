@@ -10,10 +10,7 @@
 </thead>
 <tbody>
 <td>
-    <form action="/app/drink/list/search" method="get">
         Type name: <input name="name" type="text"><br/>
-        <input type="submit">
-    </form>
 </td>
 </tbody>
 </table>

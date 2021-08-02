@@ -10,12 +10,9 @@
     </thead>
     <tbody>
     <td>
-        <form action="/app/drink/list/filter" method="get">
             <c:forEach items="${glasses}" var="glass">
                 <input type="checkbox" name="glass" value="${glass}">${glass}<br/>
             </c:forEach>
-            <input type="submit">
-        </form>
     </td>
     </tbody>
 </table>

@@ -10,11 +10,8 @@
     </thead>
     <tbody>
     <td>
-        <form action="/app/drink/list/filter" method="get">
             <input name="alc" type="checkbox" value="alcoholic" checked>Alcoholic<br/>
             <input name="alc" type="checkbox" value="non_alcoholic">Non Alcoholic<br/>
-            <input type="submit">
-        </form>
     </td>
     </tbody>
 </table>
