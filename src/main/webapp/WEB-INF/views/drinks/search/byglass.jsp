@@ -10,9 +10,13 @@
     </thead>
     <tbody>
     <td>
+        <select name="glass" id="glass">
+            <option value="empty">Select glass type</option>
             <c:forEach items="${glasses}" var="glass">
-                <input type="checkbox" name="glass" value="${glass}">${glass}<br/>
+                <option value="${glass}">${glass}</option>
             </c:forEach>
+        </select>
+
     </td>
     </tbody>
 </table>

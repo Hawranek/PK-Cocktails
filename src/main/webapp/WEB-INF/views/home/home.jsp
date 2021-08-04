@@ -15,6 +15,8 @@
     <thead>
     <th><a href="/login">Zaloguj się</a></th>
     <th><a href="/form">Zarejestruj się</a></th>
+    <th><a href="/app/drink/list">Wyszukaj koktajl</a></th>
+    <th><a href="/app/card/all">Pokaż wszystkie karty</a></th>
 
     </thead>
     <tbody>

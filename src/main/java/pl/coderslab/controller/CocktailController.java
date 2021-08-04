@@ -134,14 +134,14 @@ public class CocktailController {
         return "drinks/list";
     }
 
-    @GetMapping("/list/letter")
-    public String listByLetter(@RequestParam("search") String litera, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/search.php?f=%s", litera);
-        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
+//    @GetMapping("/list/letter")
+//    public String listByLetter(@RequestParam("search") String litera, Model model) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/search.php?f=%s", litera);
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
 //
 //    @GetMapping("/list/search")
 //    public String listByName(
@@ -154,42 +154,42 @@ public class CocktailController {
 //        return "drinks/list";
 //    }
 
-    @GetMapping("/list/ingredient")
-    public String listByIngredient(@RequestParam("search") String nazwa, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s", nazwa);
-        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
-
-    @GetMapping("/list/alcoholic")
-    public String listByAlcoholic(@RequestParam("search") String alc, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=%s", alc);
-        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
-
-    @GetMapping("/list/category")
-    public String listByCategory(@RequestParam("search") String cat, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=%s", cat);
-        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-        System.out.println(cat);
-        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
-
-    @GetMapping("/list/glasses")
-    public String listByGlass(@RequestParam("search") String gls, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=%s", gls);
-        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
+//    @GetMapping("/list/ingredient")
+//    public String listByIngredient(@RequestParam("search") String nazwa, Model model) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s", nazwa);
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
+//
+//    @GetMapping("/list/alcoholic")
+//    public String listByAlcoholic(@RequestParam("search") String alc, Model model) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=%s", alc);
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
+//
+//    @GetMapping("/list/category")
+//    public String listByCategory(@RequestParam("search") String cat, Model model) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=%s", cat);
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        System.out.println(cat);
+//        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
+//
+//    @GetMapping("/list/glasses")
+//    public String listByGlass(@RequestParam("search") String gls, Model model) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=%s", gls);
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
 
     @GetMapping("/show")
     public String showDrink(@RequestParam("drinkid") Long id, Model model) {

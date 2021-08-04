@@ -10,9 +10,13 @@
     </thead>
     <tbody>
     <td>
+        <select name="cat" id="cat" multiple>
+            <option value="empty">Select categories</option>
             <c:forEach items="${categories}" var="cat">
-                <input type="checkbox" name="cat" value="${cat}">${cat}<br/>
+                <option value="${cat}">${cat}</option>
             </c:forEach>
+        </select>
+
     </td>
     </tbody>
 </table>

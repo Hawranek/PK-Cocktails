@@ -29,7 +29,7 @@
 </tr>
 
     </form>
-    <form action="/app/drink/list/filter" method="get">
+    <form:form modelAttribute="cocktails" action="/app/drink/list/filter" method="get">
         <td>
             <%@include file="search/byingredient.jsp" %>
         </td>
@@ -43,7 +43,7 @@
             <%@include file="search/byglass.jsp" %>
         </td>
         <input type="submit">
-    </form>
+    </form:form>
 </table>
 <%@include file="printlist.jsp" %>
 
