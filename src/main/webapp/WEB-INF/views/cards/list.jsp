@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Adding Card for user: ${user.email}</title>
+    <title>Cards of user: ${user.email}</title>
 </head>
 <body>
 <tr>${user}</tr><br/>
@@ -24,7 +24,7 @@
     <tbody>
     <c:forEach var="card" items="${cards}">
         <tr>
-            <td>${card.name}</td>
+            <td><a href="<c:out value="/app/card/${card.id}/cocktails"/>">${card.name}</a> </td>
             <td>${card.getCocktails().size()}</td>
 <%--            <td></td>--%>
             <td>

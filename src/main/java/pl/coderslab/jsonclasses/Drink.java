@@ -101,7 +101,11 @@ public class Drink {
         cocktail.setInstructions(strInstructions);
         cocktail.setDrinkThumb(strDrinkThumb);
         for (String s : getIngredientList()) {
-            cocktail.setIngredientList(String.format("%s\n%s",cocktail.getIngredientList(), s));
+            if (cocktail.getIngredientList()!=null) {
+                cocktail.setIngredientList(String.format("%s,\n%s", cocktail.getIngredientList(), s));
+            }else {
+                cocktail.setIngredientList(s);
+            }
         }
         cocktail.setImageSource(strImageSource);
 

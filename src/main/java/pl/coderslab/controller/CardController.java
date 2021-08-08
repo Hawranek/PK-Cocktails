@@ -35,6 +35,7 @@ public class CardController {
         this.cocktailRepository = cocktailRepository;
     }
 
+    //wyświetlanie kart użytkownika z sesji
     @RequestMapping("/all")
     public String list(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -44,6 +45,7 @@ public class CardController {
         return "cards/list";
     }
 
+    //dodawanie nowej karty dla danego użytkownika
     @GetMapping("/form")
     public String form(Model model, HttpServletRequest request) {
         Card card = new Card();
@@ -53,6 +55,7 @@ public class CardController {
         return "cards/form";
     }
 
+    //edytowanie karty danego użytkownika
     @GetMapping("/form/{id}")
     public String edit(@PathVariable Long id, Model model) {
         Card card = cardRepository.getById(id);
@@ -60,6 +63,7 @@ public class CardController {
         return "cards/form";
     }
 
+    //zapis dodawanej/edytowanej karty danego użytkownika
     @PostMapping("/form")
     public String addingCard(@Valid Card card, BindingResult result) {
         if (result.hasErrors()) {
@@ -70,12 +74,14 @@ public class CardController {
         return "redirect:/app/card/all";
     }
 
+    //usuwanie karty danego użytkownika
     @GetMapping("/del/{id}")
     public String delete(@PathVariable Long id) {
         cardRepository.deleteById(id);
         return "redirect:/app/card/all";
     }
 
+    //wyświetlanie drinków w danej karcie
     @RequestMapping("/{id}/cocktails")
     public String cocktailList(@PathVariable Long id, Model model) {
         Card byId = cardRepository.findById(id).orElse(null);
