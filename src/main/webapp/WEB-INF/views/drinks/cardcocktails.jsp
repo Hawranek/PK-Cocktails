@@ -85,8 +85,7 @@
     </style>
 </head>
 <body>
-<%@include file="../home/nav.jsp"%>
-
+<%@include file="../cards/cardnavigation.jsp"%>
 <table>
     <thead>
     <th>Name</th>
@@ -109,7 +108,10 @@
             <td>${drink.instructions}</td>
             <td>${drink.ingredientList}</td>
 
-            <td><a href="<c:out value="/app/drink/show?drinkid=${drink.id}"/> ">Delete</a></td>
+            <td>
+                <a href="<c:out value="/app/drink/form/${card.id}/${drink.id}"/> ">Edit</a>
+                <a href="<c:out value="/app/drink/del/${card.id}/${drink.id}"/> ">Delete</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

@@ -5,20 +5,27 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.entity.Card;
 import pl.coderslab.entity.Cocktail;
+import pl.coderslab.entity.User;
 import pl.coderslab.jsonclasses.CocktailList;
 import pl.coderslab.jsonclasses.Drink;
+import pl.coderslab.repository.CardRepository;
 import pl.coderslab.repository.CocktailRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("app/drink")
 public class CocktailController {
 
     private final CocktailRepository cocktailRepository;
+    private final CardRepository cardRepository;
 
     @ModelAttribute("alphabet")
     private List<String> alphabet() {
@@ -70,8 +77,9 @@ public class CocktailController {
         return ingredients;
     }
 
-    public CocktailController(CocktailRepository cocktailRepository) {
+    public CocktailController(CocktailRepository cocktailRepository, CardRepository cardRepository) {
         this.cocktailRepository = cocktailRepository;
+        this.cardRepository = cardRepository;
     }
 
     @GetMapping("/list")
@@ -102,94 +110,37 @@ public class CocktailController {
 
     @GetMapping("/list/filter")
     public String listFilter(
-            @RequestParam(value = "ing",required = false) List<String> ing,          //ingredients
-            @RequestParam(value = "glass",required = false) List<String> glass,      //glass type
-            @RequestParam(value = "cat",required = false) List<String> cat,          //category
-            @RequestParam(value = "alc",required = false) List<String> alc,          //alcohol content
+            @RequestParam(value = "ing", required = false) List<String> ing,          //ingredients
+            @RequestParam(value = "glass", required = false) List<String> glass,      //glass type
+            @RequestParam(value = "cat", required = false) List<String> cat,          //category
+            @RequestParam(value = "alc", required = false) List<String> alc,          //alcohol content
             Model model) {
         RestTemplate restTemplate = new RestTemplate();
         String resource = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?";
-        if (ing!=null){
+        if (ing != null) {
             for (String s : ing) {
-                resource=String.format(resource+"i=%s&",s);
+                resource = String.format(resource + "i=%s&", s);
             }
         }
-        if (glass!=null){
+        if (glass != null) {
             for (String s : glass) {
-                resource=String.format(resource+"g=%s&",s);
+                resource = String.format(resource + "g=%s&", s);
             }
         }
-        if (cat!=null){
+        if (cat != null) {
             for (String s : cat) {
-                resource=String.format(resource+"c=%s&",s);
+                resource = String.format(resource + "c=%s&", s);
             }
         }
-        if (alc!=null){
+        if (alc != null) {
             for (String s : alc) {
-                resource=String.format(resource+"a=%s&",s);
+                resource = String.format(resource + "a=%s&", s);
             }
         }
         CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
         model.addAttribute("cocktails", cocktailList);
         return "drinks/list";
     }
-
-//    @GetMapping("/list/letter")
-//    public String listByLetter(@RequestParam("search") String litera, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/search.php?f=%s", litera);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
-//
-//    @GetMapping("/list/search")
-//    public String listByName(
-//            @RequestParam("name") String name,
-//            Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=%s", name);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
-
-//    @GetMapping("/list/ingredient")
-//    public String listByIngredient(@RequestParam("search") String nazwa, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s", nazwa);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
-//
-//    @GetMapping("/list/alcoholic")
-//    public String listByAlcoholic(@RequestParam("search") String alc, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=%s", alc);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
-//
-//    @GetMapping("/list/category")
-//    public String listByCategory(@RequestParam("search") String cat, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=%s", cat);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        System.out.println(cat);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
-//
-//    @GetMapping("/list/glasses")
-//    public String listByGlass(@RequestParam("search") String gls, Model model) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=%s", gls);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-//        return "drinks/list";
-//    }
 
     @GetMapping("/show")
     public String showDrink(@RequestParam("drinkid") Long id, Model model) {
@@ -200,5 +151,56 @@ public class CocktailController {
         return "drinks/show";
     }
 
+    @GetMapping("/form")
+    public String newCocktail(
+            Model model,
+            HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession();
+        model.addAttribute("cocktail", new Cocktail());
+        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        return "drinks/form";
+    }
+
+    @GetMapping("/form/{cardid}/{cocktailid}")
+    public String newCocktail(
+            @PathVariable("cardid") Long cardid,
+            @PathVariable("cocktailid") Long id,
+            Model model,
+            HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession();
+        model.addAttribute("cocktail", cocktailRepository.findById(id));
+        model.addAttribute("card",cardRepository.findById(cardid).orElse(null));
+//        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        return "drinks/form";
+    }
+
+    @PostMapping("/form")
+    public String saveCocktail(
+            @RequestParam("cardid") Long cardid,
+            @Valid Cocktail cocktail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "app/drink/form";
+        }
+//        Card byId = cardRepository.findById(cardid).orElse(null);
+        cocktailRepository.save(cocktail);
+//        List<Cocktail> cocktailstmp = byId.getCocktails();
+//        cocktailstmp.add(cocktail);
+//        byId.setCocktails(cocktailstmp);
+//        cardRepository.save(byId);
+        return String.format("redirect:/app/card/%d/cocktails",cardid);
+    }
+
+    @GetMapping("/del/{cardid}/{cocktailid}")
+    public String deleteCocktail(
+            @PathVariable("cardid") Long cardid,
+            @PathVariable("cocktailid") Long cocktailid
+    ) {
+        Card byId = cardRepository.findById(cardid).orElse(null);
+        byId.removeCocktail(cocktailRepository.findById(cocktailid).orElse(null));
+        cardRepository.save(byId);
+        return String.format("redirect:/app/card/%d/cocktails",cardid);
+    }
 
 }

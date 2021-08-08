@@ -12,9 +12,7 @@
     <title>Cards of user: ${user.email}</title>
 </head>
 <body>
-<tr>${user}</tr><br/>
-<tr><a href="/logout">Wyloguj</a></tr><br/>
-<%@include file="../home/nav.jsp"%>
+<%@include file="cardnavigation.jsp"%>
 <table>
     <thead>
     <th>Name</th>
