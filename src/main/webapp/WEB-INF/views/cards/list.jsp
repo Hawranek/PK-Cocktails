@@ -14,6 +14,7 @@
 <body>
 <tr>${user}</tr><br/>
 <tr><a href="/logout">Wyloguj</a></tr><br/>
+<%@include file="../home/nav.jsp"%>
 <table>
     <thead>
     <th>Name</th>
@@ -24,8 +25,8 @@
     <c:forEach var="card" items="${cards}">
         <tr>
             <td>${card.name}</td>
-<%--            <td>${card.cocktails.size}</td>--%>
-            <td></td>
+            <td>${card.getCocktails().size()}</td>
+<%--            <td></td>--%>
             <td>
                 <a href="<c:out value="/app/card/form/${card.id}"/>">Edytuj</a>
                 <a href="<c:out value="/app/card/del/${card.id}"/>">Usuń</a>

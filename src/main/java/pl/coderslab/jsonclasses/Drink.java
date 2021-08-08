@@ -91,7 +91,7 @@ public class Drink {
     }
 
 
-    private Cocktail parseToCocktail() {
+    public Cocktail parseToCocktail() {
         Cocktail cocktail = new Cocktail();
         cocktail.setId(idDrink);
         cocktail.setName(strDrink);
@@ -101,7 +101,7 @@ public class Drink {
         cocktail.setInstructions(strInstructions);
         cocktail.setDrinkThumb(strDrinkThumb);
         for (String s : getIngredientList()) {
-            cocktail.setIngredientList(cocktail.getIngredientList() + "\n" + s);
+            cocktail.setIngredientList(String.format("%s\n%s",cocktail.getIngredientList(), s));
         }
         cocktail.setImageSource(strImageSource);
 

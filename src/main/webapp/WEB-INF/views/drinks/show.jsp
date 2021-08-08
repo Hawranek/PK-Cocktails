@@ -29,6 +29,7 @@
     <th>Glass type</th>
     <th>Instructions</th>
     <th>Ingredients</th>
+    <th>Action</th>
     </thead>
     <tbody>
     <tr>
@@ -42,6 +43,7 @@
                 ${ing}<br/>
             </c:forEach>
         </td>
+        <td><a href="/app/card/addtocard/${drink.idDrink}">Dodaj do karty</a> </td>
     </tr>
     </tbody>
     </c:forEach>

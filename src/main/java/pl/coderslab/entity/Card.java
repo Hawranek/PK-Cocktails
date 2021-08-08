@@ -23,7 +23,7 @@ public class Card {
     private Long id;
     @NotBlank
     private String name;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Cocktail> cocktails;
     @NotNull
     @ManyToOne

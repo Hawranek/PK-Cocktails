@@ -27,6 +27,4 @@ public class Cocktail {
     private List<Ingredient> ingredients;
     private String imageSource;
     private String ingredientList;
-
-
 }

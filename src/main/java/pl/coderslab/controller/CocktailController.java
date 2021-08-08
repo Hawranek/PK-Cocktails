@@ -2,15 +2,15 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.entity.Cocktail;
 import pl.coderslab.jsonclasses.CocktailList;
 import pl.coderslab.jsonclasses.Drink;
 import pl.coderslab.repository.CocktailRepository;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,5 +199,6 @@ public class CocktailController {
         model.addAttribute("cocktail", cocktailList);
         return "drinks/show";
     }
+
 
 }
