@@ -151,6 +151,7 @@ public class CocktailController {
         return "drinks/show";
     }
 
+    //dodawanie nowego cocktailu do karty
     @GetMapping("/form")
     public String newCocktail(
             Model model,
@@ -162,6 +163,7 @@ public class CocktailController {
         return "drinks/form";
     }
 
+    //edytowanie cocktailu w karcie
     @GetMapping("/form/{cardid}/{cocktailid}")
     public String newCocktail(
             @PathVariable("cardid") Long cardid,
@@ -172,23 +174,41 @@ public class CocktailController {
         HttpSession session = request.getSession();
         model.addAttribute("cocktail", cocktailRepository.findById(id));
         model.addAttribute("card",cardRepository.findById(cardid).orElse(null));
-//        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
-        return "drinks/form";
+        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        return "drinks/formedit";
     }
 
-    @PostMapping("/form")
+    //edycja cocktailu w karcie
+    @PostMapping("/edit")
     public String saveCocktail(
             @RequestParam("cardid") Long cardid,
             @Valid Cocktail cocktail, BindingResult result) {
         if (result.hasErrors()) {
             return "app/drink/form";
         }
-//        Card byId = cardRepository.findById(cardid).orElse(null);
+
+        //nie ma potrzeby wyciągać jeszcze raz z bazy cocktailu i ustawiać mu wszsystkich pól, ponieważ
+//        podczas edycji, do formularza jest przekazywany cocktail z bazy - 2 razy ta sama robota
+
         cocktailRepository.save(cocktail);
-//        List<Cocktail> cocktailstmp = byId.getCocktails();
-//        cocktailstmp.add(cocktail);
-//        byId.setCocktails(cocktailstmp);
-//        cardRepository.save(byId);
+        return String.format("redirect:/app/card/%d/cocktails",cardid);
+    }
+
+    //dodawanie nowego cocktailu do karty
+    @PostMapping("/form")
+    public String editCocktail(
+            @RequestParam("cardid") Long cardid,
+            @Valid Cocktail cocktail, BindingResult result
+    ) {
+        if(result.hasErrors()){
+            return "app/drink/form";
+        }
+        Card byId = cardRepository.findById(cardid).orElse(null);
+        cocktailRepository.save(cocktail);
+        if(!byId.getCocktails().contains(cocktail)){
+            byId.addCocktail(cocktail);
+        }
+        cardRepository.save(byId);
         return String.format("redirect:/app/card/%d/cocktails",cardid);
     }
 

@@ -24,8 +24,7 @@ public class Card {
     private Long id;
     @NotBlank
     private String name;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @UniqueElements
+    @ManyToMany(cascade={CascadeType.ALL})
     private List<Cocktail> cocktails;
     @NotNull
     @ManyToOne
@@ -37,5 +36,9 @@ public class Card {
 
     public void removeCocktail(Cocktail cocktail) {
         this.cocktails.remove(cocktail);
+    }
+
+    public void addCocktail(Cocktail cocktail){
+        this.cocktails.add(cocktail);
     }
 }

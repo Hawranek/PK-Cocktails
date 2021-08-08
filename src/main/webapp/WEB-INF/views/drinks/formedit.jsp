@@ -22,8 +22,8 @@
 
 <table>
 
-    <form:form modelAttribute="cocktail" method="post" action="/app/drink/form">
-<%--        <input type="hidden" name="cardid" id="cardid" value="${card.id}">--%>
+    <form:form modelAttribute="cocktail" method="post" action="/app/drink/edit">
+        <%--        <input type="hidden" name="cardid" id="cardid" value="${card.id}">--%>
         <form:hidden path="id"/>
         <thead>
         <th>Name</th>

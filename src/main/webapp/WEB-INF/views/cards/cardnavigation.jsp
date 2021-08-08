@@ -4,4 +4,4 @@
 <tr>${user}</tr><br/>
 <tr><a href="/logout">Wyloguj</a></tr><br/>
 <%@include file="../home/nav.jsp"%>
-<a href="app/drink/form">Add new cocktail</a>
+<a href="/app/drink/form">Add new cocktail</a>

@@ -26,7 +26,7 @@
             <td>${card.getCocktails().size()}</td>
 <%--            <td></td>--%>
             <td>
-                <a href="<c:out value="/app/card/form/${card.id}"/>">Edytuj</a>
+                <a href="<c:out value="/app/card/edit/${card.id}"/>">Edytuj</a>
                 <a href="<c:out value="/app/card/del/${card.id}"/>">Usuń</a>
             </td>
         </tr>
