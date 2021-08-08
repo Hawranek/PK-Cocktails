@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+<%@include file="../home/nav.jsp"%>
 <table>
     <form method="post" action="/app/card/addtocard">
         <img src="${cocktail.drinkThumb}" width="300" height="300">

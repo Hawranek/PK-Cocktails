@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+<%@include file="../home/nav.jsp"%>
 <%--97-122 małe litery--%>
 <table >
     Search by First Letter:

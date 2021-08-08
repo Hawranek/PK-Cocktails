@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+<%@include file="../home/nav.jsp"%>
 <table>
     <c:forEach items="${cocktail.drinks}" var="drink">
     <img src="${drink.strDrinkThumb}" width="300" height="300">

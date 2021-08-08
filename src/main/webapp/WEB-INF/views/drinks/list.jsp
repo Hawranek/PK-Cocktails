@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+<%@include file="../home/nav.jsp"%>
 <%@include file="search/byfirstletter.jsp" %>
 <table>
     <form action="/app/drink/list/search" method="get">
