@@ -28,7 +28,7 @@
             <%@include file="search/byname.jsp" %>
         </td>
 </tr>
-
+<input type="submit">
     </form>
     <form:form modelAttribute="cocktails" action="/app/drink/list/filter" method="get">
         <td>

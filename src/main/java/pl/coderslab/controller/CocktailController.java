@@ -173,7 +173,7 @@ public class CocktailController {
     ) {
         HttpSession session = request.getSession();
         model.addAttribute("cocktail", cocktailRepository.findById(id));
-        model.addAttribute("card",cardRepository.findById(cardid).orElse(null));
+        model.addAttribute("card", cardRepository.findById(cardid).orElse(null));
         model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
         return "drinks/formedit";
     }
@@ -191,7 +191,7 @@ public class CocktailController {
 //        podczas edycji, do formularza jest przekazywany cocktail z bazy - 2 razy ta sama robota
 
         cocktailRepository.save(cocktail);
-        return String.format("redirect:/app/card/%d/cocktails",cardid);
+        return String.format("redirect:/app/card/%d/cocktails", cardid);
     }
 
     //dodawanie nowego cocktailu do karty
@@ -200,18 +200,19 @@ public class CocktailController {
             @RequestParam("cardid") Long cardid,
             @Valid Cocktail cocktail, BindingResult result
     ) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return "app/drink/form";
         }
         Card byId = cardRepository.findById(cardid).orElse(null);
         cocktailRepository.save(cocktail);
-        if(!byId.getCocktails().contains(cocktail)){
+        if (!byId.getCocktails().contains(cocktail)) {
             byId.addCocktail(cocktail);
         }
         cardRepository.save(byId);
-        return String.format("redirect:/app/card/%d/cocktails",cardid);
+        return String.format("redirect:/app/card/%d/cocktails", cardid);
     }
 
+    //usuwanie cocktailu z karty
     @GetMapping("/del/{cardid}/{cocktailid}")
     public String deleteCocktail(
             @PathVariable("cardid") Long cardid,
@@ -220,7 +221,80 @@ public class CocktailController {
         Card byId = cardRepository.findById(cardid).orElse(null);
         byId.removeCocktail(cocktailRepository.findById(cocktailid).orElse(null));
         cardRepository.save(byId);
-        return String.format("redirect:/app/card/%d/cocktails",cardid);
+        return String.format("redirect:/app/card/%d/cocktails", cardid);
+    }
+
+    //wyszukiwanie w karcie
+    @GetMapping("/incard/searching")
+    public String searching(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        return "drinks/cardsearch";
+    }
+
+
+    //wyszukiwanie w karcie po nazwie lub pierwszej literze
+    @GetMapping("/incard/search")
+    public String searchInCardByFirstLetterOrName(
+            @RequestParam("cardid") Long cardid,                                      //cardId
+            @RequestParam(value = "name", required = false) List<String> name,              //name of cocktail
+            Model model) {
+        List<Cocktail> result = new ArrayList<>();
+        if (name != null) {
+            for (String s : name) {
+                if (!s.isEmpty()) {
+                    Card card = cardRepository.findById(cardid).orElse(null);
+                    for (Cocktail cocktail : card.getCocktails()) {
+                        if (cocktail.getName().toUpperCase().startsWith(s.toUpperCase())) {
+                            result.add(cocktail);
+                        }
+                    }
+                }
+            }
+        } else {
+            Card card = cardRepository.findById(cardid).orElse(null);
+            result = card.getCocktails();
+        }
+
+
+        model.addAttribute("cocktails", result);
+        return "drinks/cardcocktails";
+    }
+
+    @GetMapping("/incard/filter")
+    public String cardFilter(
+            @RequestParam(value = "ing", required = false) List<String> ing,          //ingredients
+            @RequestParam(value = "glass", required = false) List<String> glass,      //glass type
+            @RequestParam(value = "cat", required = false) List<String> cat,          //category
+            @RequestParam(value = "alc", required = false) List<String> alc,          //alcohol content
+            Model model) {
+
+        //trzeba sprawdzić w bazie, które cocktaile pasują do wyszukiwanych parametrów
+
+        //warunki do przerobienia
+//        if (ing != null) {
+//            for (String s : ing) {
+//
+//            }
+//        }
+//        if (glass != null) {
+//            for (String s : glass) {
+//                resource = String.format(resource + "g=%s&", s);
+//            }
+//        }
+//        if (cat != null) {
+//            for (String s : cat) {
+//                resource = String.format(resource + "c=%s&", s);
+//            }
+//        }
+//        if (alc != null) {
+//            for (String s : alc) {
+//                resource = String.format(resource + "a=%s&", s);
+//            }
+//        }
+//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+//        model.addAttribute("cocktails", cocktailList);
+        return "drinks/list";
     }
 
 }
