@@ -15,6 +15,9 @@
         table, th, td {
             border: 1px solid black;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -23,7 +26,6 @@
 <table>
 
     <form:form modelAttribute="cocktail" method="post" action="/app/drink/form">
-<%--        <input type="hidden" name="cardid" id="cardid" value="${card.id}">--%>
         <form:hidden path="id"/>
         <thead>
         <th>Name</th>

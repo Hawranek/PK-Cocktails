@@ -18,8 +18,14 @@
     </style>
 </head>
 <body>
-<form:form modelAttribute="user" method="post">
+<form:form modelAttribute="user" method="post" action="/form">
     <form:hidden path="id"/>
+    <tr>
+        Username:
+        <form:input path="username"/>
+        <form:errors path="username" cssClass="error"/>
+        <br/>
+    </tr>
     <tr>
         Email:
         <form:input path="email"/>

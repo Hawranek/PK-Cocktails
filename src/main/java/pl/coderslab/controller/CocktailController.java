@@ -12,13 +12,12 @@ import pl.coderslab.jsonclasses.CocktailList;
 import pl.coderslab.jsonclasses.Drink;
 import pl.coderslab.repository.CardRepository;
 import pl.coderslab.repository.CocktailRepository;
+import pl.coderslab.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("app/drink")
@@ -26,7 +25,14 @@ public class CocktailController {
 
     private final CocktailRepository cocktailRepository;
     private final CardRepository cardRepository;
+    private final UserRepository userRepository;
 
+    @ModelAttribute("user")
+    public User user(HttpServletRequest request) {
+        return userRepository.getUserByUsername(request.getUserPrincipal().getName());
+    }
+
+    //lista pierwszych znaków z API
     @ModelAttribute("alphabet")
     private List<String> alphabet() {
         List<String> alphabet = new ArrayList<>();
@@ -41,6 +47,7 @@ public class CocktailController {
         return alphabet;
     }
 
+    //lista kategorii z API
     @ModelAttribute("categories")
     public List<String> categories() {
         RestTemplate restTemplate = new RestTemplate();
@@ -53,6 +60,7 @@ public class CocktailController {
         return categories;
     }
 
+    //lista szkła z API
     @ModelAttribute("glasses")
     public List<String> glasses() {
         RestTemplate restTemplate = new RestTemplate();
@@ -65,6 +73,7 @@ public class CocktailController {
         return glasses;
     }
 
+    //lista składników z API
     @ModelAttribute("ingredients")
     public List<String> ingredients() {
         RestTemplate restTemplate = new RestTemplate();
@@ -77,11 +86,13 @@ public class CocktailController {
         return ingredients;
     }
 
-    public CocktailController(CocktailRepository cocktailRepository, CardRepository cardRepository) {
+    public CocktailController(CocktailRepository cocktailRepository, CardRepository cardRepository, UserRepository userRepository) {
         this.cocktailRepository = cocktailRepository;
         this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
     }
 
+    //strona główna wyszukiwania cocktaili
     @GetMapping("/list")
     public String list(Model model) {
         RestTemplate restTemplate = new RestTemplate();
@@ -91,6 +102,7 @@ public class CocktailController {
         return "drinks/list";
     }
 
+    //wyszukiwanie cocktaili po pierwszej literze i nazwie
     @GetMapping("/list/search")
     public String listSearchByFirstLetter(
             @RequestParam(value = "fl", required = false) String fl,                  //first letter
@@ -108,6 +120,7 @@ public class CocktailController {
         return "drinks/list";
     }
 
+    //wyszukiwnie cocktaili po składnikach, szkle, kategorii, zawartości alkoholu
     @GetMapping("/list/filter")
     public String listFilter(
             @RequestParam(value = "ing", required = false) List<String> ing,          //ingredients
@@ -117,22 +130,22 @@ public class CocktailController {
             Model model) {
         RestTemplate restTemplate = new RestTemplate();
         String resource = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?";
-        if (ing != null) {
+        if (ing != null) {                                          //składniki
             for (String s : ing) {
                 resource = String.format(resource + "i=%s&", s);
             }
         }
-        if (glass != null) {
+        if (glass != null) {                                        //szkło
             for (String s : glass) {
                 resource = String.format(resource + "g=%s&", s);
             }
         }
-        if (cat != null) {
+        if (cat != null) {                                          //kategoria
             for (String s : cat) {
                 resource = String.format(resource + "c=%s&", s);
             }
         }
-        if (alc != null) {
+        if (alc != null) {                                          //zawartość alkoholu
             for (String s : alc) {
                 resource = String.format(resource + "a=%s&", s);
             }
@@ -142,6 +155,7 @@ public class CocktailController {
         return "drinks/list";
     }
 
+    //wyświetlanie pojedynczego cocktailu z API
     @GetMapping("/show")
     public String showDrink(@RequestParam("drinkid") Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
@@ -157,13 +171,12 @@ public class CocktailController {
             Model model,
             HttpServletRequest request
     ) {
-        HttpSession session = request.getSession();
         model.addAttribute("cocktail", new Cocktail());
-        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        model.addAttribute("cards", cardRepository.findByUser(user(request)));
         return "drinks/form";
     }
 
-    //edytowanie cocktailu w karcie
+    //edytowanie cocktailu z karty
     @GetMapping("/form/{cardid}/{cocktailid}")
     public String newCocktail(
             @PathVariable("cardid") Long cardid,
@@ -171,14 +184,13 @@ public class CocktailController {
             Model model,
             HttpServletRequest request
     ) {
-        HttpSession session = request.getSession();
         model.addAttribute("cocktail", cocktailRepository.findById(id));
         model.addAttribute("card", cardRepository.findById(cardid).orElse(null));
-        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        model.addAttribute("cards", cardRepository.findByUser(user(request)));
         return "drinks/formedit";
     }
 
-    //edycja cocktailu w karcie
+    //zapisywanie edytowanego cocktailu do karcie
     @PostMapping("/edit")
     public String saveCocktail(
             @RequestParam("cardid") Long cardid,
@@ -194,7 +206,7 @@ public class CocktailController {
         return String.format("redirect:/app/card/%d/cocktails", cardid);
     }
 
-    //dodawanie nowego cocktailu do karty
+    //zapisywanie nowego cocktailu do karty
     @PostMapping("/form")
     public String editCocktail(
             @RequestParam("cardid") Long cardid,
@@ -224,11 +236,10 @@ public class CocktailController {
         return String.format("redirect:/app/card/%d/cocktails", cardid);
     }
 
-    //wyszukiwanie w karcie
+    //formularz wyszukiwania cocktaili w karcie
     @GetMapping("/incard/searching")
     public String searching(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        model.addAttribute("cards", cardRepository.findByUser((User) session.getAttribute("user")));
+        model.addAttribute("cards", cardRepository.findByUser(user(request)));
         return "drinks/cardsearch";
     }
 
@@ -261,40 +272,52 @@ public class CocktailController {
         return "drinks/cardcocktails";
     }
 
-    @GetMapping("/incard/filter")
-    public String cardFilter(
-            @RequestParam(value = "ing", required = false) List<String> ing,          //ingredients
-            @RequestParam(value = "glass", required = false) List<String> glass,      //glass type
-            @RequestParam(value = "cat", required = false) List<String> cat,          //category
-            @RequestParam(value = "alc", required = false) List<String> alc,          //alcohol content
-            Model model) {
-
-        //trzeba sprawdzić w bazie, które cocktaile pasują do wyszukiwanych parametrów
-
-        //warunki do przerobienia
-//        if (ing != null) {
-//            for (String s : ing) {
+    //wyszukiwanie w karcie po składnikach, szkle, kategorii, zawartości alkoholu
+//    @GetMapping("/incard/filter")
+//    public String cardFilter(
+//            @RequestParam(value = "ing", required = false) List<String> ing,          //ingredients
+//            @RequestParam(value = "glass", required = false) List<String> glass,      //glass type
+//            @RequestParam(value = "cat", required = false) List<String> cat,          //category
+//            @RequestParam(value = "alc", required = false) List<String> alc,          //alcohol content
+//            @RequestParam(value = "cardid") Long cardid,                              //card ID
+//            Model model) {
 //
+//        //trzeba sprawdzić w bazie, które cocktaile pasują do wyszukiwanych parametrów
+//
+//        //najpierw trzeba dodać do bazy składniki, które występują w cocktailach w karcie
+//
+//        if (ing != null || glass != null || cat != null || alc != null) {
+//            Card card = cardRepository.findById(cardid).orElse(null);
+//            if (ing != null) {
+////                card.getCocktails().stream().filter(x->x.get)
 //            }
 //        }
-//        if (glass != null) {
-//            for (String s : glass) {
-//                resource = String.format(resource + "g=%s&", s);
-//            }
-//        }
-//        if (cat != null) {
-//            for (String s : cat) {
-//                resource = String.format(resource + "c=%s&", s);
-//            }
-//        }
-//        if (alc != null) {
-//            for (String s : alc) {
-//                resource = String.format(resource + "a=%s&", s);
-//            }
-//        }
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        model.addAttribute("cocktails", cocktailList);
-        return "drinks/list";
-    }
+//
+//
+//        //warunki do przerobienia
+////        if (ing != null) {
+////            for (String s : ing) {
+////
+////            }
+////        }
+////        if (glass != null) {
+////            for (String s : glass) {
+////                resource = String.format(resource + "g=%s&", s);
+////            }
+////        }
+////        if (cat != null) {
+////            for (String s : cat) {
+////                resource = String.format(resource + "c=%s&", s);
+////            }
+////        }
+////        if (alc != null) {
+////            for (String s : alc) {
+////                resource = String.format(resource + "a=%s&", s);
+////            }
+////        }
+////        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
+////        model.addAttribute("cocktails", cocktailList);
+//        return "drinks/list";
+//    }
 
 }

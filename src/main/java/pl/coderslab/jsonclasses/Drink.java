@@ -80,7 +80,6 @@ public class Drink {
                 (strMeasure14 != null || strIngredient14 != null ? String.format("%s of %s", strMeasure14, strIngredient14) : null),
                 (strMeasure15 != null || strIngredient15 != null ? String.format("%s of %s", strMeasure15, strIngredient15) : null)
         );
-
         List<String> result = new ArrayList<>();
         for (String s : tmp) {
             if (s != null) {
@@ -101,18 +100,15 @@ public class Drink {
         cocktail.setInstructions(strInstructions);
         cocktail.setDrinkThumb(strDrinkThumb);
         for (String s : getIngredientList()) {
-            if (cocktail.getIngredientList()!=null) {
+            if (cocktail.getIngredientList() != null) {
                 cocktail.setIngredientList(String.format("%s,\n%s", cocktail.getIngredientList(), s));
-            }else {
+            } else {
                 cocktail.setIngredientList(s);
             }
         }
         cocktail.setImageSource(strImageSource);
-
         return cocktail;
     }
 
 
-
-//    private LocalDateTime dateModified;
 }

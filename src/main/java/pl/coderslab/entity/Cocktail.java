@@ -25,8 +25,6 @@ public class Cocktail {
     private String instructions;
     @Size(max = 255)
     private String drinkThumb;
-    @ManyToMany
-    private List<Ingredient> ingredients;
     private String imageSource;
     private String ingredientList;
 }

@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     <td>
-        <select name="glass" id="glass">
+        <select name="glass" id="glass" multiple>
             <option value="">Select glass type</option>
             <c:forEach items="${glasses}" var="glass">
                 <option value="${glass}">${glass}</option>

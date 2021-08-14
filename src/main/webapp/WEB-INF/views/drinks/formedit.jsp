@@ -33,7 +33,6 @@
         <th>Glass type</th>
         <th>Instructions</th>
         <th>Ingredients</th>
-        <th>Card name</th>
         <th>Action</th>
         </thead>
         <tbody>
@@ -46,11 +45,6 @@
             <td><form:input path="instructions"/></td>
             <td><form:input path="ingredientList"/></td>
 
-            <td><select name="cardid" id="cardid">
-                <c:forEach items="${cards}" var="card">
-                    <option value="${card.id}">${card.name}</option>
-                </c:forEach>
-            </select></td>
             <td><input type="submit"></td>
         </tr>
         </tbody>

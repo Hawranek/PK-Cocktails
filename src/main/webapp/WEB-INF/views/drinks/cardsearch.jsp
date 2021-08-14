@@ -31,7 +31,6 @@
                 <c:forEach var="i" items="${alphabet}">
                     <th>
                         <input type="submit" value="${i}" name="name">
-<%--                        <a href="<c:out value="/app/drink/incard/search?name=${i}&cardid="/>">${i}</a>--%>
                     </th>
                 </c:forEach>
             </tr>
@@ -41,31 +40,10 @@
             <td>
                 <%@include file="search/byname.jsp" %>
             </td>
-            <td>
-                <select name="cardid" id="cardid">
-                    <c:forEach var="card" items="${cards}">
-                        <option value="${card.id}">${card.name}</option>
-                    </c:forEach>
-                </select>
-            </td>
+            <%@include file="search/cardselect.jsp"%>
         </tr>
     <input type="submit">
     </form>
-    <form:form modelAttribute="cocktails" action="/app/drink/incard/filter" method="get">
-        <td>
-            <%@include file="search/byingredient.jsp" %>
-        </td>
-        <td>
-            <%@include file="search/byalcoholic.jsp" %>
-        </td>
-        <td>
-            <%@include file="search/bycategory.jsp" %>
-        </td>
-        <td>
-            <%@include file="search/byglass.jsp" %>
-        </td>
-        <input type="submit">
-    </form:form>
 </table>
 <%@include file="printlist.jsp" %>
 

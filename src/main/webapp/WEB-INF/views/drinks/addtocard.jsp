@@ -20,10 +20,19 @@
 <body>
 <%@include file="../cards/cardnavigation.jsp"%>
 <table>
-    <form method="post" action="/app/card/addtocard">
+    <form:form modelAttribute="cocktail" method="post" action="/app/card/addtocard">
+        <form:hidden path="id"/>
+        <form:hidden path="name"/>
+        <form:hidden path="category"/>
+        <form:hidden path="alcoholic"/>
+        <form:hidden path="glass"/>
+        <form:hidden path="instructions"/>
+        <form:hidden path="drinkThumb"/>
+        <form:hidden path="imageSource"/>
+        <form:hidden path="ingredientList"/>
+
         <img src="${cocktail.drinkThumb}" width="300" height="300">
         <h1>${cocktail.name}</h1>
-        <input type="hidden" name="drinkid" value="${cocktail.id}">
         <thead>
         <th>Card name</th>
         </thead>
@@ -36,7 +45,7 @@
         <input type="submit"/>
         </tbody>
 
-    </form>
+    </form:form>
 </table>
 
 </body>
