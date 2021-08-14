@@ -10,7 +10,6 @@ import pl.coderslab.entity.Cocktail;
 import pl.coderslab.entity.User;
 import pl.coderslab.jsonclasses.CocktailList;
 import pl.coderslab.repository.CardRepository;
-import pl.coderslab.repository.CocktailRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,6 @@ import java.util.List;
 public class CardController {
 
     private final CardRepository cardRepository;
-    private final CocktailRepository cocktailRepository;
     private final UserRepository userRepository;
 
     @ModelAttribute("user")
@@ -33,11 +31,9 @@ public class CardController {
 
     public CardController(
             CardRepository cardRepository,
-            CocktailRepository cocktailRepository,
             UserRepository userRepository
     ) {
         this.cardRepository = cardRepository;
-        this.cocktailRepository = cocktailRepository;
         this.userRepository = userRepository;
     }
 
@@ -104,7 +100,6 @@ public class CardController {
         Cocktail cocktail = cocktailList.getDrinks().get(0).parseToCocktail();
 
         List<Card> cardsByUser = cardRepository.findByUser(user(request));
-        //dodanie usera do modelu? niby jest w modelu servletu..
         //dodanie kart do modelu? - DODANE
 
         model.addAttribute("cocktail", cocktail);
@@ -116,14 +111,9 @@ public class CardController {
     @PostMapping("/addtocard")
     public String add(
             Cocktail cocktail,
-//            @RequestParam("drinkid") Long drinkId,
             @RequestParam("cardid") Long cardid
     ) {
         Card byId = cardRepository.findById(cardid).orElse(null);
-//        RestTemplate restTemplate = new RestTemplate();
-//        String resource = String.format("https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%d", drinkId);
-//        CocktailList cocktailList = restTemplate.getForObject(resource, CocktailList.class);
-//        Cocktail cocktail = cocktailList.getDrinks().get(0).parseToCocktail();
         System.out.println(cocktail.toString());
         List<Cocktail> tmplist;
         if (byId.getCocktails() == null) {
