@@ -102,6 +102,14 @@ public class CocktailController {
         return "drinks/list";
     }
 
+    //trzeba zrobić serwisy do połączenia z API, 3 metody search, filter, lookup
+    //doczytać o RestTemplate - wstrzykiwanie
+
+
+
+
+
+
     //wyszukiwanie cocktaili po pierwszej literze i nazwie
     @GetMapping("/list/search")
     public String listSearchByFirstLetter(
@@ -193,7 +201,7 @@ public class CocktailController {
     //zapisywanie edytowanego cocktailu do karcie
     @PostMapping("/edit")
     public String saveCocktail(
-            @RequestParam("cardid") Long cardid,
+            @RequestParam(value = "cardid", required = false) Long cardid,
             @Valid Cocktail cocktail, BindingResult result) {
         if (result.hasErrors()) {
             return "app/drink/form";
