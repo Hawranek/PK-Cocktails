@@ -23,7 +23,9 @@
 <table>
 
     <form:form modelAttribute="cocktail" method="post" action="/app/drink/edit">
+        <%--        <input type="hidden" name="cardid" id="cardid" value="${card.id}">--%>
         <form:hidden path="id"/>
+        <input type="hidden" name="cardid" id="cardid" value="${card.id}"/>
         <thead>
         <th>Name</th>
         <th>Image</th>
@@ -43,6 +45,7 @@
             <td><form:input path="glass"/></td>
             <td><form:input path="instructions"/></td>
             <td><form:input path="ingredientList"/></td>
+
 
             <td><input type="submit"></td>
         </tr>

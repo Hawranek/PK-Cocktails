@@ -194,14 +194,13 @@ public class CocktailController {
     ) {
         model.addAttribute("cocktail", cocktailRepository.findById(id));
         model.addAttribute("card", cardRepository.findById(cardid).orElse(null));
-        model.addAttribute("cards", cardRepository.findByUser(user(request)));
         return "drinks/formedit";
     }
 
     //zapisywanie edytowanego cocktailu do karcie
     @PostMapping("/edit")
     public String saveCocktail(
-            @RequestParam(value = "cardid", required = false) Long cardid,
+            @RequestParam(value = "cardid") Long cardid,
             @Valid Cocktail cocktail, BindingResult result) {
         if (result.hasErrors()) {
             return "app/drink/form";
