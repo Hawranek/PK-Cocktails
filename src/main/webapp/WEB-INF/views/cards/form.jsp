@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Cards of user: ${user.email}</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <a href="/logout">Wyloguj</a>
@@ -28,7 +33,11 @@
         <form:hidden path="user"/>
         <form:hidden path="cocktails"/>
         <tr>
-            <td><form:input path="name"/></td>
+            <td>
+                <form:input path="name"/>
+                <form:errors path="name" cssClass="error"/>
+            </td>
+
         </tr>
         <tr><input type="submit"> </tr>
     </form:form>

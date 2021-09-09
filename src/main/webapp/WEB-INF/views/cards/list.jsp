@@ -9,11 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Adding Card for user: ${user.email}</title>
+    <title>Cards of user: ${user.email}</title>
 </head>
 <body>
-<tr>${user}</tr><br/>
-<tr><a href="/logout">Wyloguj</a></tr><br/>
+<%@include file="cardnavigation.jsp"%>
 <table>
     <thead>
     <th>Name</th>
@@ -23,9 +22,9 @@
     <tbody>
     <c:forEach var="card" items="${cards}">
         <tr>
-            <td>${card.name}</td>
-<%--            <td>${card.cocktails.size}</td>--%>
-            <td></td>
+            <td><a href="<c:out value="/app/card/${card.id}/cocktails"/>">${card.name}</a> </td>
+            <td>${card.getCocktails().size()}</td>
+<%--            <td></td>--%>
             <td>
                 <a href="<c:out value="/app/card/form/${card.id}"/>">Edytuj</a>
                 <a href="<c:out value="/app/card/del/${card.id}"/>">Usuń</a>

@@ -11,7 +11,7 @@
     <tbody>
     <td>
         <select name="ing" id="ing" multiple>
-            <option value="empty">Select Ingredients</option>
+            <option value="">Select Ingredients</option>
             <c:forEach items="${ingredients}" var="ing">
                 <option value="${ing}">${ing}</option>
             </c:forEach>

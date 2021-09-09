@@ -26,7 +26,7 @@
     </tr>
     <tr>
         Password:
-        <form:input path="password"/>
+        <form:password path="password"/>
         <form:errors path="password" cssClass="error"/>
         <br/>
     </tr>

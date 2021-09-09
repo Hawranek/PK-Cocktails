@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+<%@include file="../cards/cardnavigation.jsp"%>
 <%@include file="search/byfirstletter.jsp" %>
 <table>
     <form action="/app/drink/list/search" method="get">
@@ -27,7 +28,7 @@
             <%@include file="search/byname.jsp" %>
         </td>
 </tr>
-
+<input type="submit">
     </form>
     <form:form modelAttribute="cocktails" action="/app/drink/list/filter" method="get">
         <td>
