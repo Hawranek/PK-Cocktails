@@ -3,11 +3,19 @@ package pl.coderslab.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -19,9 +27,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    @Pattern(regexp = "/^[a-z\\d]+[\\w\\d.-]*@(?:[a-z\\d]+[a-z\\d-]+\\.){1,5}[a-z]{2,6}$/i")
+    private String username;
+    @Email
     private String email;
     @NotBlank
-    @Range(min = 3,max = 10)
     private String password;
+    private Boolean enabled;
+    private String role;
+
+    public User() {
+        this.enabled = true;
+        this.role = "USER";
+    }
 }

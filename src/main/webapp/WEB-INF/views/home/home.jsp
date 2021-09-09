@@ -11,12 +11,17 @@
     <title>HomePage</title>
 </head>
 <body>
+<table>
+    <thead>
+    <th><a href="/login">Zaloguj się</a></th>
+    <th><a href="/form">Zarejestruj się</a></th>
+    <%@include file="nav.jsp"%>
 
-<p>User name: ${user.email}</p>
-<p>Cocktail name: ${cocktail.name}</p>
-<p>Ingredient name: ${ingredient.name}</p>
-<p>Card name: ${card.name}</p>
-<a href="/login">Zaloguj się</a>
-<a href="/form">Zarejestruj się</a>
+    </thead>
+    <tbody>
+    <tr>Pomysł: aplikacja z cocktailami, umożliwiająca utworzenie własnej karty barowej</tr>
+    </tbody>
+
+</table>
 </body>
 </html>

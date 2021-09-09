@@ -3,8 +3,13 @@ package pl.coderslab.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,10 +22,23 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String name;
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.ALL})
     private List<Cocktail> cocktails;
+    @NotNull
     @ManyToOne
     private User user;
 
+    public Card() {
+        this.cocktails = new ArrayList<>();
+    }
+
+    public void removeCocktail(Cocktail cocktail) {
+        this.cocktails.remove(cocktail);
+    }
+
+    public void addCocktail(Cocktail cocktail){
+        this.cocktails.add(cocktail);
+    }
 }

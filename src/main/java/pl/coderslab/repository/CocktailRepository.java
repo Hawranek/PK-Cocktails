@@ -9,4 +9,5 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
     Cocktail findByName(String name);
     List<Cocktail> findByAlcoholicIsTrue();
     List<Cocktail> findByAlcoholicIsFalse();
+    List<Cocktail> findByNameStartingWith(String fl);
 }

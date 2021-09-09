@@ -3,8 +3,10 @@ package pl.coderslab.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.coderslab.jsonclasses.Drink;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -21,8 +23,8 @@ public class Cocktail {
     private Boolean alcoholic;
     private String glass;
     private String instructions;
+    @Size(max = 255)
     private String drinkThumb;
-    @ManyToMany
-    private List<Ingredient> ingredients;
     private String imageSource;
+    private String ingredientList;
 }

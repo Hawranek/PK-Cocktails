@@ -12,20 +12,31 @@
     <title>Cards of user: ${user.email}</title>
 </head>
 <body>
+<%@include file="cardnavigation.jsp"%>
 <table>
     <thead>
     <th>Name</th>
     <th>Amount of cocktails</th>
+    <th>Action</th>
     </thead>
     <tbody>
     <c:forEach var="card" items="${cards}">
         <tr>
-            <td>${card.name}</td>
-            <td>${card.cocktails.size}</td>
+            <td><a href="<c:out value="/app/card/${card.id}/cocktails"/>">${card.name}</a> </td>
+            <td>${card.getCocktails().size()}</td>
+<%--            <td></td>--%>
+            <td>
+                <a href="<c:out value="/app/card/form/${card.id}"/>">Edytuj</a>
+                <a href="<c:out value="/app/card/del/${card.id}"/>">Usuń</a>
+            </td>
         </tr>
 
     </c:forEach>
+
     </tbody>
+</table>
+<table>
+    <tr><a href="<c:out value="/app/card/form"/>">Dodaj kartę</a> </tr>
 </table>
 
 </body>
