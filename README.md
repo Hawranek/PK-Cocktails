@@ -1,5 +1,5 @@
 # PK_Cocktails
-wersja 2
+Projekt końcowy
 
 Aplikacja Spring Boot do tworzenia karty barowej koktajli. Do dyspozycji użytkownika jest baza koktajli z darmowego API oraz możliwość tworzenia nowego własnego koktajlu.
 Aplikacja umożliwia tworzenie kart oraz dodawanie, edytowanie i usuwanie koktajli. 
